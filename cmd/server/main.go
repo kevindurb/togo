@@ -5,9 +5,15 @@ import (
 	"net/http"
 
 	"github.com/kevindurb/togo/internal/app"
+	"github.com/kevindurb/togo/internal/database"
 )
 
 func main() {
+	err := database.MigrateAll()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	mux := http.NewServeMux()
 
 	app := app.New()
@@ -16,5 +22,6 @@ func main() {
 	mux.Handle("GET /", http.RedirectHandler("/todos", http.StatusMovedPermanently))
 	mux.HandleFunc("GET /todos", app.ListTodos)
 
+	log.Println("Starting server on :8080")
 	log.Fatal(http.ListenAndServe(":8080", mux))
 }
