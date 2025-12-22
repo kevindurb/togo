@@ -1,23 +1,28 @@
 package app
 
 import (
+	"database/sql"
 	"html/template"
+	"log"
 
-	"github.com/jmoiron/sqlx"
 	"github.com/kevindurb/togo/internal/database"
 	"github.com/kevindurb/togo/web"
 )
 
 type App struct {
+	queries       *database.Queries
 	listTodosTmpl *template.Template
-	db            *sqlx.DB
 }
 
 func New() App {
-	db := database.Connect()
+	db, err := sql.Open("sqlite3", "./data.db")
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	return App{
-		db: &db,
+		queries: database.New(db),
 		listTodosTmpl: template.Must(template.ParseFS(
 			web.Files,
 			"templates/layouts/base.gohtml",

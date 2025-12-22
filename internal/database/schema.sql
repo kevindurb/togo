@@ -1,0 +1,6 @@
+CREATE TABLE todos (
+  id INTEGER PRIMARY KEY,
+  description TEXT NOT NULL,
+  done BOOLEAN NOT NULL CHECK (done in (0, 1)),
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+)
