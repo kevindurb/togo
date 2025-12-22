@@ -12,6 +12,7 @@ func main() {
 
 	app := app.New()
 
+	mux.Handle("GET /static/", http.StripPrefix("/static/", app.StaticFileServer()))
 	mux.Handle("GET /", http.RedirectHandler("/todos", http.StatusMovedPermanently))
 	mux.HandleFunc("GET /todos", app.ListTodos)
 

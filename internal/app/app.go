@@ -11,6 +11,10 @@ type App struct {
 
 func New() App {
 	return App{
-		listTodosTmpl: template.Must(template.ParseFS(web.Files, "templates/layouts/base.html", "templates/pages/list_todos.html")),
+		listTodosTmpl: template.Must(template.ParseFS(
+			web.Files,
+			"templates/layouts/base.gohtml",
+			"templates/pages/list_todos.gohtml",
+		)),
 	}
 }
