@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/kevindurb/togo/internal/database"
+	"github.com/kevindurb/togo/internal/utils"
 )
 
 type CreateTodoBody struct {
@@ -25,19 +26,13 @@ func (a *App) ListTodos(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) CreateTodo(w http.ResponseWriter, r *http.Request) {
 	userID := userIDFromContext(r.Context())
-	if err := r.ParseForm(); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
 	var body CreateTodoBody
-	err := a.decoder.Decode(&body, r.PostForm)
-	if err != nil {
+	if err := utils.DecodePostForm(&body, r, a.decoder); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	err = a.queries.CreateTodo(r.Context(), database.CreateTodoParams{
+	err := a.queries.CreateTodo(r.Context(), database.CreateTodoParams{
 		Description: body.Description,
 		UserID:      userID,
 	})

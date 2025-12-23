@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/kevindurb/togo/internal/database"
+	"github.com/kevindurb/togo/internal/utils"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -17,14 +18,9 @@ type NewUserPageData struct {
 }
 
 func (a *App) CreateUser(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseForm(); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
 	var body CreateUserBody
-	err := a.decoder.Decode(&body, r.PostForm)
-	if err != nil {
+
+	if err := utils.DecodePostForm(&body, r, a.decoder); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}

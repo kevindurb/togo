@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/sessions"
 	"github.com/kevindurb/togo/internal/database"
+	"github.com/kevindurb/togo/internal/utils"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -30,15 +31,9 @@ func showLoginError(w http.ResponseWriter, r *http.Request, msg string) {
 }
 
 func (a *App) Login(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseForm(); err != nil {
-		showLoginError(w, r, "Login Error")
-		return
-	}
-
 	var body LoginBody
-	err := a.decoder.Decode(&body, r.PostForm)
-	if err != nil {
-		showLoginError(w, r, "Login Error")
+	if err := utils.DecodePostForm(&body, r, a.decoder); err != nil {
+		showLoginError(w, r, "Incorrect Username or Password")
 		return
 	}
 
