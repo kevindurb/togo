@@ -8,9 +8,24 @@ import (
 	"time"
 )
 
+type Session struct {
+	ID        interface{}
+	UserID    int64
+	ExpiresAt time.Time
+	CreatedAt time.Time
+}
+
 type Todo struct {
 	ID          int64
+	UserID      int64
 	Description string
 	Done        bool
 	CreatedAt   time.Time
+}
+
+type User struct {
+	ID           int64
+	Username     string
+	PasswordHash []byte
+	CreatedAt    time.Time
 }

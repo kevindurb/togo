@@ -1,2 +1,11 @@
 {{define "content"}}
+<form action="/todos" method="post">
+  <input type="text" name="description" required />
+  <input type="submit" value="Add" />
+</form>
+<ul>
+  {{range .Todos}}
+  <li>{{.Description}}</li>
+  {{end}}
+</ul>
 {{end}}
