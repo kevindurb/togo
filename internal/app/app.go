@@ -1,9 +1,7 @@
 package app
 
 import (
-	"database/sql"
 	"html/template"
-	"log"
 
 	"github.com/kevindurb/togo/internal/database"
 	"github.com/kevindurb/togo/web"
@@ -15,11 +13,7 @@ type App struct {
 }
 
 func New() App {
-	db, err := sql.Open("sqlite3", "./data.db")
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	db := database.Open()
 
 	return App{
 		queries: database.New(db),

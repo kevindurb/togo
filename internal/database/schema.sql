@@ -1,4 +1,4 @@
-CREATE TABLE todos (
+CREATE TABLE IF NOT EXISTS todos (
   id INTEGER PRIMARY KEY,
   description TEXT NOT NULL,
   done BOOLEAN NOT NULL CHECK (done in (0, 1)),

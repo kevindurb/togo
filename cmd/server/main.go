@@ -9,10 +9,7 @@ import (
 )
 
 func main() {
-	err := database.MigrateAll()
-	if err != nil {
-		log.Fatal(err)
-	}
+	database.ExecSchema()
 
 	mux := http.NewServeMux()
 
