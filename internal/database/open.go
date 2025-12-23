@@ -7,7 +7,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func Open() *sql.DB {
+func MustOpen() *sql.DB {
 	db, err := sql.Open("sqlite3", "./data.db")
 
 	if err != nil {

@@ -13,7 +13,7 @@ type App struct {
 }
 
 func New() App {
-	db := database.Open()
+	db := database.MustOpen()
 
 	return App{
 		queries: database.New(db),
